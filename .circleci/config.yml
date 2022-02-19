@@ -1,0 +1,62 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/Expense-Tracker-UI
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - restore_cache:
+          key: Expense-Tracker-UI-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          key: Expense-Tracker-UI-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            npm run build-ghpages
+          else
+            npm run build
+          fi
+      - persist_to_workspace:
+          root: ~/Expense-Tracker-UI
+          paths:
+            - dist/*
+  deploy:
+    working_directory: ~/Expense-Tracker-UI
+    docker:
+      - image: node
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'c4:2a:4e:51:08:4e:92:80:60:b2:d9:53:08:bf:ca:20'
+      - checkout
+      - attach_workspace:
+          at: ~/Expense-Tracker-UI
+      - run:
+          name: Install gh-pages
+          command: |
+            npm install -g --silent gh-pages
+      - run:
+          name: Configure git
+          command: |
+            git config user.email "cleardive126@gmail.com"
+            git config user.name "cleardive"
+      - run:
+          name: Deploy to gh-pages branch
+          command: gh-pages --message "[ci skip]" -d dist
+
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
