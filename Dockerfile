@@ -7,4 +7,4 @@ RUN npm run build --prod
 
 #stage 2
 FROM nginx:alpine
-COPY --from=node /app/dist/Expense-Tracker-UI /usr/share/nginx/html
+COPY --from=node /app/dist /usr/share/nginx/html
