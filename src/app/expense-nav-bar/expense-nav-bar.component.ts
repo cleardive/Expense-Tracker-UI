@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-expense-nav-bar',
@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExpenseNavBarComponent implements OnInit {
 
+  public showAddTrnxBtn: boolean  = false;
   constructor() { }
 
   ngOnInit(): void {
+    this.checkingInnerWidth();
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+   this.checkingInnerWidth();
   }
 
+  checkingInnerWidth() {
+    if ( window.innerWidth >= 640)
+      this.showAddTrnxBtn = true;
+    else 
+      this.showAddTrnxBtn  = false;
+  }
 }
