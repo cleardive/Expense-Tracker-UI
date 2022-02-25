@@ -1,14 +1,17 @@
-<nav class="flex flex-wrap bg-purple-50 p-6 justify-around">
-  <div>
+<nav class="flex flex-wrap bg-purple-50 p-3">
+  <div class="flex items-center w-2/6 space-x-1.5 sm:space-x-3">
     <i class="fa-solid fa-file-invoice-dollar fa-2xl"></i>
     <span class="text-sm">Account
       <i class="fa-solid fa-sort-down"></i><br>
       -222,555.78
     </span>
   </div>
-  <div><i class="fa-regular fa-calendar fa-2xl"></i></div>
-  <div><i class="fa-regular fa-eye fa-2xl"></i></div>
-  <div><i class="fa-solid fa-magnifying-glass fa-2xl"></i></div>
-  <div><i class="fa-solid fa-circle-plus fa-2xl sm:hidden"></i></div>
-  <div *ngIf="showAddTrnxBtn"><button class="bg-purple-600 text-white text-center py-2 px-4 rounded">ADD TRANSACTION</button></div>
+  <div class="flex justify-between items-center sm:justify-end sm:space-x-5 w-4/6">
+    <div><i class="fa-regular fa-calendar fa-lg"></i></div>
+    <div><i class="fa-regular fa-eye fa-lg"></i></div>
+    <div><i class="fa-solid fa-magnifying-glass fa-lg"></i></div>
+    <div><i class="fa-solid fa-circle-plus fa-lg sm:hidden"></i></div>
+    <div *ngIf="showAddTrnxBtn"><button class="bg-purple-600 text-white text-center text-sm py-2 px-4 rounded">ADD
+        TRANSACTION</button></div>
+  </div>
 </nav>
